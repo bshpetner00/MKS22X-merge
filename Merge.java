@@ -44,6 +44,16 @@ public class Merge {
 		}
 	}
 
+	private static void cleanUp(int[]data, int iOne, int iTwo, int lo, int piv, int hi) {
+		while (iOne <= piv-lo) {
+			data[lo+iOne+iTwo] = temp[lo+iOne];
+			iOne++;
+		}
+		while (iTwo < hi-piv) {
+			data[lo+iOne+iTwo] = temp[piv+iTwo+1];
+			iTwo++;
+		}
+	}
 	public static void merge(int[]data,int[]temp, int lo, int piv, int hi) {
 		int iOne = 0;
 		int iTwo = 0;
@@ -51,12 +61,14 @@ public class Merge {
 			if (temp[lo+iOne] >= temp[mid+(iTwo+1)]) {
 				data[lo+iOne+iTwo] = temp[mid+(iTwo+1)];
 				iTwo++;
-				
 			}
 			else {
 				data[lo+iOne+iTwo] = temp[lo+iOne];
 				iOne++;
 			}
+		}
+		if (iOne <= piv-low || iTwo < hi-piv) {
+			cleanUp(data, iOne, iTwo, lo, piv, hi);
 		}
 	}
 }
