@@ -33,18 +33,16 @@ public class Merge {
 		if (hi - lo <= 47) {
 			insertionSort(data,lo,hi);
 		}
-		else if (lo >= hi) {
-			return;
+		if (lo < hi) {
+			int piv = lo + (hi - lo) / 2;
+			mergeH(temp, data, lo, piv);
+			mergeH(temp, data, piv + 1, hi);
+			merge(data, temp, lo, piv, hi);
 		}
-		else {
-			int piv = medianI(data,lo,hi);
-			mergeH(data, temp, lo, piv);
-			mergeH(data, temp, piv+1, hi);
-			merge(data,temp,lo,piv,hi);
-		}
+
 	}
 
-	private static void cleanUp(int[]data, int iOne, int iTwo, int lo, int piv, int hi) {
+	private static void cleanUp(int[]data, int[]temp, int iOne, int iTwo, int lo, int piv, int hi) {
 		while (iOne <= piv-lo) {
 			data[lo+iOne+iTwo] = temp[lo+iOne];
 			iOne++;
@@ -57,9 +55,9 @@ public class Merge {
 	public static void merge(int[]data,int[]temp, int lo, int piv, int hi) {
 		int iOne = 0;
 		int iTwo = 0;
-		while (iOne <= piv-low && iTwo < hi-piv) {
-			if (temp[lo+iOne] >= temp[mid+(iTwo+1)]) {
-				data[lo+iOne+iTwo] = temp[mid+(iTwo+1)];
+		while (iOne <= piv-lo && iTwo < hi-piv) {
+			if (temp[lo+iOne] >= temp[piv+(iTwo+1)]) {
+				data[lo+iOne+iTwo] = temp[piv+(iTwo+1)];
 				iTwo++;
 			}
 			else {
@@ -67,8 +65,8 @@ public class Merge {
 				iOne++;
 			}
 		}
-		if (iOne <= piv-low || iTwo < hi-piv) {
-			cleanUp(data, iOne, iTwo, lo, piv, hi);
+		if (iOne <= piv-lo || iTwo < hi-piv) {
+			cleanUp(data, temp, iOne, iTwo, lo, piv, hi);
 		}
 	}
 }
