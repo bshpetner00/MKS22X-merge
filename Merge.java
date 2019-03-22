@@ -8,6 +8,20 @@ public class Merge {
 		ary[l] = temp;
 	}
 
+	public static void insertionSort(int [] data, int lo, int hi) {
+		if (data.length != 0) {
+			for (int i = lo + 1; i < hi+1; i++) {
+				int temp = data[i];
+      			int j = i - 1;
+      			while (j + 1 > lo && temp < data[j]){
+        			data[j+1] = data[j];
+        			j--;
+      			}
+      			data[j+1] = temp;
+			}
+		}
+	}
+
 
 	public static void mergesort(int[]data) {
 		int[] temp = Arrays.copyOf(data, data.length);
